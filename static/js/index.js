@@ -37,6 +37,23 @@ $(document).ready(function() {
         }
         load_random_practice_word();
     });
+    $("#load-set").click(function(e) {
+        e.preventDefault();
+        $.getJSON('/loadSet', 'label=' + $('#set-label').val(), function(data) {
+            $('#word-list').children().remove();
+            $.each(data.data, function(k, v) {
+                $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + v + "</span><span class='word-item-delete'>&times;</span></div>"));
+            });
+        });
+    });
+    $("#save-set").click(function(e) {
+        e.preventDefault();
+        var words = [];
+        $.each($("#word-list").children(), function(k, v) {
+            words.push($(this).find('.word-item-text').text());
+        });
+        $.get('/saveSet', 'label=' + $('#set-label').val() + '&words=' + encodeURIComponent(JSON.stringify(words)));
+    });
 });
 function load_random_practice_word() {
     load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text());
@@ -77,17 +94,4 @@ function check_answer(usrans) {
 function load_practice_word(word) {
     $("#practice-word").text(word);
     quiz_word();
-}
-
-function load_set() {
-  $.get('/loadSet', 'label=' + $('#load-set').val(), function(data) {
-    $('#word-list').children().remove();
-    $.each(data, function(k, v) {
-      $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + v + "</span><span class='word-item-delete'>&times;</span></div>"));
-    });
-  });
-}
-
-function save_set() {
-  // $.post('/saveSet', 'label=' + $('save-set').text() + '&words=' + )
 }

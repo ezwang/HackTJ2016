@@ -39,17 +39,16 @@ def saveWordList():
     savedWords[name] = json.loads(l)
     t = th.Thread(target=saveWords)
     t.run()
-    return 'success'
+    return 'True'
 
 
 @app.route('/loadSet')
 def getWordList():
     name = request.args.get('label')
     try:
-        return json.dumps(savedWords[name])
+        return jsonify(**{'data':savedWords[name]})
     except KeyError:
-        return None
-
+        return ""
 
 @app.route('/getListOfLists')
 def getListList():
