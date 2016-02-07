@@ -40,6 +40,11 @@ $(document).ready(function() {
             catch (e) { }
         }
     });
+    $("#set-label").keyup(function(e) {
+        if (e.keyCode == 13) {
+            $("#load-set").click();
+        }
+    });
     $("#load-set").click(function(e) {
         e.preventDefault();
         $.getJSON('/loadSet', 'label=' + encodeURIComponent($('#set-label').val()), function(data) {
