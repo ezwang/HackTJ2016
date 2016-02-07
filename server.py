@@ -1,9 +1,9 @@
 #!/usr/bin/env python2
-from copy import deepcopy
 
 from flask import *
 import json
 import threading as th
+import requests
 
 app = Flask(__name__, static_url_path='')
 with open('Uni2Pinyin.json') as the_file:
@@ -89,6 +89,13 @@ def loadPinyinList():
     while k < len(words):
         char_pinyin[words[k]] = words[k + 1]
     return char_pinyin
+
+
+@app.route('/getTTS')
+def getTTS():
+    phrase = request.args.get('chars')
+    audio = requests.get('https://api.voicerss.org/?', params={'key': '970f71e61a4b4c8abd6af0d1f6a5326e', 'src': phrase, 'hl': 'zh-cn'})
+    return audio.content
 
 
 def saveWords():

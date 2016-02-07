@@ -67,6 +67,11 @@ $(document).ready(function() {
       $('.about').css('display', 'none');
     });
     $('#speaker').click(function() {
+      var chars = document.getElementById('practice-word').innerHTML;
+      if (!chars) return;
+      var file = $.get('/getTTS', 'chars=' + chars);
+      var audio = new Audio(file);
+      audio.play();
       // var msg = new SpeechSynthesisUtterance();
       // msg.txt = '\\u549b';
       // console.log(msg.txt);
