@@ -59,6 +59,9 @@
 {
     display:inline;
 }
+#upload {
+  display: none;
+}
 </style>
 <div class="card">
     <h3>Word Practice</h3>
@@ -73,6 +76,8 @@
         <input type="text" id="new-word" name="new-word" class="form-control" placeholder="New Word" />
     </div>
     <button id="add-word" class="btn btn-raised btn-success">Add Word</button>
+    <button id='upload-button' class='btn btn-raised btn-primary'>Upload Set</button>
+    <input type='file' id='upload'>
     <div style='float:right;'>
       <input type='text' id='set-label' class="form-control" style='width:20vw;box-shadow:none;margin-right:1vw;display:inline' placeholder="Label Name">
       <button id='save-set' class="btn btn-raised btn-success" disabled>Save</button>

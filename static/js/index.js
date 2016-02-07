@@ -62,10 +62,11 @@ $(document).ready(function() {
         $("#load-set, #save-set, #delete-set").prop("disabled", $("#set-label").val().length == 0);
     });
     $.get('/getListOfSets', function(data) {
-      console.log(data.data);
       $('#set-label').autocomplete({source: data.data, delay: 0});
     });
-    //console.log(all_sets);
+    $('#upload-button').click(function(e) {
+      $('#upload').slideDown('fast');
+    });
 });
 function load_random_practice_word() {
     load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text());
