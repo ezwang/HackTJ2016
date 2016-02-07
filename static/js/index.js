@@ -54,6 +54,9 @@ $(document).ready(function() {
         });
         $.get('/saveSet', 'label=' + $('#set-label').val() + '&words=' + encodeURIComponent(JSON.stringify(words)));
     });
+    $("#set-label").keyup(function(e) {
+        $("#load-set, #save-set").prop("disabled", $("#set-label").val().length == 0);
+    });
 });
 function load_random_practice_word() {
     load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text());
