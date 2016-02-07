@@ -14,8 +14,6 @@ with open('savedWords.json') as savedWordsJSON:
 
 fileLock = th.Lock()
 
-currentWords = {}
-
 
 @app.route('/')
 def index():
@@ -26,7 +24,8 @@ def index():
 def getPinYin():
     spoken = request.args.get('spoken')
     actual = request.args.get('actual')
-    if len(actual) != len(spoken): return 'False'
+    if len(actual) != len(spoken):
+        return 'False'
     for c in range(len(spoken)):
         spoken_unicode = hex(ord(spoken[c]))[2:].upper()
         actual_unicode = hex(ord(actual[c]))[2:].upper()
@@ -35,45 +34,11 @@ def getPinYin():
     return 'True'
 
 
-@app.route('/updateWordList')
-def updateCurrentList():
-    char = request.args.get('char')
-    trans = request.args.get('meaning')
-    if char in currentWords:
-        currentWords[char] = trans
-        return 'Updated'
-    currentWords[char] = trans
-    return 'New'
-
-
-@app.route('/remWordList')
-def removeWord():
-    char = request.args.get('char')
-    try:
-        del(currentWords[char])
-        return True
-    except ValueError:
-        return False
-
-
-@app.route('/getWordList')
-def getWordList():
-    return jsonify(**{'data': currentWords.keys()})
-
-
-@app.route('/getMeaning')
-def getMeaning():
-    char = request.args.get('char')
-    try:
-        return jsonify(**{'data': currentWords[char]})
-    except KeyError:
-        return ''
-
-
 @app.route('/saveSet')
 def saveWordList():
     name = request.args.get('label')
-    savedWords[name] = jsonify(**{'data': currentWords})
+    words = request.args.get('words')
+    savedWords[name] = json.loads(words)
     t = th.Thread(target=saveWords)
     t.run()
     return 'True'
@@ -81,13 +46,11 @@ def saveWordList():
 
 @app.route('/loadSet')
 def loadWordList():
-    global currentWords
     name = request.args.get('label')
     try:
-        currentWords = deepcopy(savedWords[name])
-        return 'True'
+        return jsonify(**{'data': savedWords[name]})
     except KeyError:
-        return 'False'
+        return ''
 
 
 @app.route('/getListOfSets')
@@ -100,24 +63,25 @@ def deleteWordList():
     name = request.args.get('label')
     if name in savedWords:
         del savedWords[name]
-    t = th.Thread(target=saveWords)
-    t.run()
-    return 'True'
+        t = th.Thread(target=saveWords)
+        t.run()
+        return 'True'
+    return 'False'
 
 
 @app.route('/loadMeaningFromFile')
 def loadMeaningList():
-    words = open('file.txt').read().split('\t') #get file from js
+    words = open('file.txt').read().split('\t')  # get file from js
     char_meaning = {}
     k = 0
     while k < len(words):
         char_meaning[words[k]] = words[k + 2]
     return char_meaning
-    
+
 
 @app.route('/loadPinyinFromFile')
 def loadPinyinList():
-    words = open('file.txt').read().split('\t') #get file from js
+    words = open('file.txt').read().split('\t')  # get file from js
     char_pinyin = {}
     k = 0
     while k < len(words):
