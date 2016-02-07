@@ -74,9 +74,25 @@
     -o-transition: background 0.25s linear;
     transition: background 0.25s linear;
 }
-#word-hint {
-    font-size:1.2em;
-    text-align:center;
+#speaker-div {
+  position:absolute;
+  text-align: center;
+  padding-top: .2vw;
+	right:1vw;
+	bottom: 1vw;
+	height: 2.5vw;
+	width: 2.5vw;
+	border-radius: 50%;
+	transition: background-color .2s, box-shadow .2s;
+}
+#speaker-div:hover {
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, .5);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
+#speaker {
+  height: 2vw;
+	width: 2vw;
 }
 </style>
 <div id="card-practice" class="card" style="margin-bottom:3vh;">
@@ -87,8 +103,10 @@
       </label>
     </div>
     <div id="practice-word"></div>
-    <div id="word-hint"></div>
     <button id="btn-toggle" class="btn btn-raised btn-primary" disabled>Start Practice</button>
+    <div id='speaker-div'>
+      <img src='speaker.png' id='speaker'>
+    </div>
 </div>
 <div id="card-list" class="card">
     <h3>Word List</h3>
