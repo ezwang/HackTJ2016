@@ -36,17 +36,17 @@ def getPinYin():
 def saveWordList():
     name = request.args.get('label')
     l = request.args.get('words')
-    savedWords[name] = json.load(l)
+    savedWords[name] = json.loads(l)
     t = th.Thread(target=saveWords)
     t.run()
-    return True
+    return 'success'
 
 
 @app.route('/getList')
 def getWordList():
     name = request.args.get('label')
     try:
-        return savedWords[name]
+        return json.dumps(savedWords[name])
     except KeyError:
         return None
 
