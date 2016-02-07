@@ -66,6 +66,26 @@ def deleteWordList():
     return 'True'
 
 
+@app.route('/loadMeaningFromFile')
+def loadMeaningList():
+    words = open('file.txt').read().split('\t') #get file from js
+    char_meaning = {}
+    k = 0
+    while k < len(words):
+        char_meaning[words[k]] = words[k + 2]
+    return char_meaning
+    
+
+@app.route('/loadPinyinFromFile')
+def loadPinyinList():
+    words = open('file.txt').read().split('\t') #get file from js
+    char_pinyin = {}
+    k = 0
+    while k < len(words):
+        char_pinyin[words[k]] = words[k + 1]
+    return char_pinyin
+
+
 def saveWords():
     fileLock.acquire()
     with open('savedWords.json', 'w') as jsonFile:
