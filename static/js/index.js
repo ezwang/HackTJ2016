@@ -45,7 +45,8 @@ $(document).ready(function() {
 function quiz_word() {
     var final_transcript = '';
     var recognition = new webkitSpeechRecognition();
-    recognition.lang = 'zh-CN';
+   recognition.lang = 'zh-CN';
+      // recognition.lang = 'cmn';
     recognition.onresult = function(event) {
         for (var i = event.resultIndex; i < event.results.length; ++i) {
             if (event.results[i].isFinal) {
@@ -60,6 +61,11 @@ function quiz_word() {
     }
     recognition.start();
 }
+
+function process_input(inpt) {
+
+}
+
 function load_practice_word(word) {
     $("#practice-word").text(word);
 }
