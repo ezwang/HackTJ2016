@@ -62,7 +62,6 @@ $(document).ready(function() {
         $("#load-set, #save-set, #delete-set").prop("disabled", $("#set-label").val().length == 0);
     });
     $.get('/getListOfSets', function(data) {
-      console.log(data.data);
       $('#set-label').autocomplete({source: data.data, delay: 0});
     });
     //console.log(all_sets);
