@@ -2,6 +2,7 @@
 {% block head %}
     {{ super() }}
     <script src="/js/index.js"></script>
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 {% endblock %}
 {% block content %}
 <style>
@@ -95,6 +96,22 @@
   height: 2vw;
 	width: 2vw;
 }
+.btn.btn-raised.btn-success{
+    background-color: #8C9EFF;
+    background-color: #536DFE;
+}
+.btn.btn-raised.btn-primary{
+    background-color: #536DFE;
+}
+.btn:not(.btn-raised).btn_success,
+input-group-btn.btn:not(.btn-raised).btn-success{
+    background-color: #8C9EFF;
+}
+.btn:not(.btn-raised).btn_primary,
+input-group-btn.btn:not(.btn-raised).btn-primary{
+    background-color: #8C9EFF;
+}
+
 </style>
 <div id="card-practice" class="card" style="margin-bottom:2vh;">
     <h3>Word Practice</h3>
