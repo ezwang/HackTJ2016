@@ -3,5 +3,52 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
-<p>This is a test!</p>
+<style>
+#word-list:empty:before
+{
+    display:block;
+    content: 'No Words';
+    color:#BDBDBD;
+    margin-bottom:15px;
+}
+#word-list
+{
+    border-bottom:1px solid #ccc;
+}
+.card
+{
+    padding:15px;
+}
+.word-item
+{
+    border-top:1px solid #ccc;
+    padding:15px;
+}
+</style>
+<script>
+$(document).ready(function() {
+    $("#add-word").click(function(e) {
+        e.preventDefault();
+        if (!$("#new-word").val()) {
+            return;
+        }
+        $("#word-list").append($("<div class='word-item'>" + $("<div />").text($("#new-word").val()).html() + "</div>"));
+        $("#new-word").val("");
+    });
+    $("#new-word").keyup(function(e) {
+        if (e.keyCode == 13) {
+            $("#add-word").click();
+        }
+    });
+});
+</script>
+<div class="card">
+    <h3>Word List</h3>
+    <div id="word-list"></div>
+    <div class="form-group">
+        <label for="new-word" class="control-label">New Word</label>
+        <input type="text" id="new-word" name="new-word" class="form-control" placeholder="New Word" />
+    </div>
+    <button id="add-word" class="btn btn-raised btn-success">Add Word</button>
+</div>
 {% endblock %}
