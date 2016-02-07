@@ -19,7 +19,7 @@ currentWords = {}
 
 from pymongo import MongoClient
 
-client = MongoClient("mongodb://derp:merp@ds059135.mongolab.com:59135/hacktj")
+client = MongoClient("localhost", 27017)
 db = client['hacktj']
 
 @app.route('/')
