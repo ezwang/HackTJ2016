@@ -46,13 +46,15 @@ def saveWordList():
 def getWordList():
     name = request.args.get('label')
     try:
-        return jsonify(**{'data':savedWords[name]})
+        return jsonify(**{'data': savedWords[name]})
     except KeyError:
-        return jsonify(**{'data':[]})
+        return jsonify(**{'data': []})
 
-@app.route('/getListOfLists')
+
+@app.route('/getListOfSets')
 def getListList():
-    return json.dumps(savedWords.keys)
+    return jsonify(**{'data': savedWords.keys})
+
 
 @app.route('/deleteSet')
 def deleteWordList():
