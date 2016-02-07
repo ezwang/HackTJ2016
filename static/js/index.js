@@ -85,14 +85,14 @@ function quiz_word() {
 function check_answer(usrans) {
     $.get('/uni2pinyin', 'spoken=' + usrans + '&actual=' + $("#practice-word").text(), function(data) {
         if (data.toLowerCase() == "true") {
-            $("#practice-word").css("background-color", "green");
+            $("#card-practice").css("background-color", "green");
         }
         else {
-            $("#practice-word").css("background-color", "red");
+            $("#card-practice").css("background-color", "red");
         }
     });
     setTimeout(function() {
-        $("#practice-word").css("background-color", "");
+        $("#card-practice").css("background-color", "");
         load_random_practice_word();
     }, 3000);
 }

@@ -67,8 +67,15 @@
     font-size:0.75em;
     color:#666;
 }
+#card-practice {
+    -webkit-transition: background 0.25s linear;
+    -moz-transition: background 0.25s linear;
+    -ms-transition: background 0.25s linear;
+    -o-transition: background 0.25s linear;
+    transition: background 0.25s linear;
+}
 </style>
-<div class="card">
+<div id="card-practice" class="card">
     <h3>Word Practice</h3>
     <div class="togglebutton" style='position:absolute;top:1vh;right:1vw;'>
       <label>
@@ -78,7 +85,7 @@
     <div id="practice-word"></div>
     <button id="btn-toggle" class="btn btn-raised btn-primary" disabled>Start Practice</button>
 </div>
-<div class="card">
+<div id="card-list" class="card">
     <h3>Word List</h3>
     <div id="word-list"></div>
     <table style='width:100%;margin-top:15px'>
