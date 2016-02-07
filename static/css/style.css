@@ -1,11 +1,8 @@
 .header-panel
 {
-    background-color:#03A9F4;
-    padding:15px;
-}
-h1
-{
-    margin:0;
+    background-color:#3f51b5;
+    color:white;
+    margin-bottom:0px;
 }
 #content
 {
