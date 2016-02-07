@@ -1,5 +1,6 @@
 var playing = false;
 $(document).ready(function() {
+    window.setTimeout(function() {$('#guide-div, #point-up').fadeOut('quick');}, 5000);
     $("#add-word").click(function(e) {
         e.preventDefault();
         if (!$("#new-word-char").val()) {
