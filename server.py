@@ -14,6 +14,8 @@ with open('savedWords.json') as savedWordsJSON:
 
 fileLock = th.Lock()
 
+currentWords = {}
+
 
 @app.route('/')
 def index():
