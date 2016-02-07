@@ -85,14 +85,16 @@ function quiz_word() {
 function check_answer(usrans) {
     $.get('/uni2pinyin', 'spoken=' + usrans + '&actual=' + $("#practice-word").text(), function(data) {
         if (data.toLowerCase() == "true") {
-            $("#card-practice").css("background-color", "green");
+            $("#card-practice").css("background-color", "#4CAF50");
         }
         else {
-            $("#card-practice").css("background-color", "red");
+            $("#card-practice").css("background-color", "#F44336");
+            $("#card-hint").text(/* TODO: insert pinyin */'').show();
         }
     });
     setTimeout(function() {
         $("#card-practice").css("background-color", "");
+        $("#card-hint").hide();
         load_random_practice_word();
     }, 3000);
 }
