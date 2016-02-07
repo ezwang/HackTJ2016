@@ -19,9 +19,9 @@ def getPinYin():
     actual = request.args.get('actual')
     if len(actual) != len(spoken): return 'False'
     for c in range(len(spoken)):
-        spoken_unicode = hex(ord(spoken[c]))[2:]
-        actual_unicode = hex(ord(actual[c]))[2:]
-        if spoken_unicode not in pinyin or actual_unicode not in pinyin or not (pinyin[spoken_unicode] & pinyin[actual_unicode]):
+        spoken_unicode = hex(ord(spoken[c]))[2:].upper()
+        actual_unicode = hex(ord(actual[c]))[2:].upper()
+        if spoken_unicode not in pinyin or actual_unicode not in pinyin or not (set(pinyin[spoken_unicode]) & set(pinyin[actual_unicode])):
             return 'False'
     return 'True'
 

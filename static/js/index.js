@@ -61,12 +61,14 @@ function quiz_word() {
     recognition.start();
 }
 function check_answer(usrans) {
-    if (usrans == $("#practice-word").text()) {
-        $("#practice-word").css("background-color", "green");
-    }
-    else {
-        $("#practice-word").css("background-color", "red");
-    }
+    $.get('/uni2pinyin', 'spoken=' + usrans + '&actual=' + $("#practice-word").text(), function(data) {
+        if (data.toLowerCase() == "true") {
+            $("#practice-word").css("background-color", "green");
+        }
+        else {
+            $("#practice-word").css("background-color", "red");
+        }
+    });
     setTimeout(function() {
         $("#practice-word").css("background-color", "");
         load_random_practice_word();
