@@ -13,6 +13,7 @@ with open('savedWords.json') as savedWordsJSON:
 
 fileLock = th.Lock()
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -38,6 +39,7 @@ def saveWordList():
     savedWords[name] = json.load(l)
     t = th.Thread(target=saveWords)
     t.run()
+    return True
 
 
 @app.route('/getList')
@@ -47,6 +49,11 @@ def getWordList():
         return savedWords[name]
     except KeyError:
         return None
+
+
+@app.route('/getListOfLists')
+def getListList():
+    return json.dumps(savedWords.keys)
 
 
 def saveWords():
