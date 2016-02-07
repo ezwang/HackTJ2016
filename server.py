@@ -7,6 +7,7 @@ app = Flask(__name__, static_url_path='')
 with open('Uni2Pinyin.json') as the_file:
     pinyin = json.load(the_file)
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
