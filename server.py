@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+from copy import deepcopy
 
 from flask import *
 import json
@@ -12,6 +13,8 @@ with open('savedWords.json') as savedWordsJSON:
     savedWords = json.load(savedWordsJSON)
 
 fileLock = th.Lock()
+
+currentWords = {}
 
 
 @app.route('/')
@@ -32,23 +35,59 @@ def getPinYin():
     return 'True'
 
 
+@app.route('/updateWordList')
+def updateCurrentList():
+    char = request.args.get('char')
+    trans = request.args.get('meaning')
+    if char in currentWords:
+        currentWords[char] = trans
+        return 'Updated'
+    currentWords[char] = trans
+    return 'New'
+
+
+@app.route('/remWordList')
+def removeWord():
+    char = request.args.get('char')
+    try:
+        del(currentWords[char])
+        return True
+    except ValueError:
+        return False
+
+
+@app.route('/getWordList')
+def getWordList():
+    return jsonify(**{'data': currentWords.keys()})
+
+
+@app.route('/getMeaning')
+def getMeaning():
+    char = request.args.get('char')
+    try:
+        return jsonify(**{'data': currentWords[char]})
+    except KeyError:
+        return ''
+
+
 @app.route('/saveSet')
 def saveWordList():
     name = request.args.get('label')
-    l = request.args.get('words')
-    savedWords[name] = json.loads(l)
+    savedWords[name] = jsonify(**{'data': currentWords})
     t = th.Thread(target=saveWords)
     t.run()
     return 'True'
 
 
 @app.route('/loadSet')
-def getWordList():
+def loadWordList():
+    global currentWords
     name = request.args.get('label')
     try:
-        return jsonify(**{'data': savedWords[name]})
+        currentWords = deepcopy(savedWords[name])
+        return 'True'
     except KeyError:
-        return jsonify(**{'data': []})
+        return 'False'
 
 
 @app.route('/getListOfSets')

@@ -65,21 +65,34 @@
 </style>
 <div class="card">
     <h3>Word Practice</h3>
+    <div class="togglebutton" style='position:absolute;top:1vh;right:1vw;'>
+      <label>
+        Character<input type="checkbox" style='margin-left:1.5vw;'>Translation
+      </label>
+    </div>
     <div id="practice-word"></div>
     <button id="btn-toggle" class="btn btn-raised btn-primary" disabled>Start Practice</button>
 </div>
 <div class="card">
     <h3>Word List</h3>
-    <div id="word-list"></div>
-    <div class="form-group">
-        <label for="new-word" class="control-label">New Word</label>
-        <input type="text" id="new-word" name="new-word" class="form-control" placeholder="New Word" />
-    </div>
-    <button id="add-word" class="btn btn-raised btn-success">Add Word</button>
-    <button id='upload-button' class='btn btn-raised btn-primary'>Upload Set</button>
-    <input type='file' id='upload'>
-    <div style='float:right;'>
-      <input type='text' id='set-label' class="form-control" style='width:20vw;box-shadow:none;margin-right:1vw;display:inline' placeholder="Label Name">
+    <label for="new-word-char" class="control-label">New Word</label>
+    <table style='width:100%;'>
+      <tr>
+        <td>
+          <div class="form-group">
+              <input type="text" id="new-word-char" name="new-word-char" class="form-control" style='width:70%' placeholder="Character" />
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+              <input type="text" id="new-word-trans" name="new-word-trans" class="form-control" style='width:70%' placeholder="Translation" />
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div>
+      <button id="add-word" class="btn btn-raised btn-success">Add Word</button>
+      <input type='text' id='set-label' class="form-control" style='width:20vw;box-shadow:none;margin-left:4vw;display:inline' placeholder="Label Name">
       <button id='save-set' class="btn btn-raised btn-success" disabled>Save</button>
       <button id='load-set' class="btn btn-raised btn-success" disabled>Load</button>
       <button id='delete-set' class="btn btn-raised btn-success" disabled>Delete</button>
