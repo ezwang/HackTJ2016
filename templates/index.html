@@ -6,10 +6,12 @@
 <style>
 #word-list:empty:before
 {
+    border-top:1px solid #ccc;
     display:block;
     content: 'No Words';
     color:#BDBDBD;
-    margin-bottom:15px;
+    padding:15px;
+    font-size:2em;
 }
 #word-list
 {
@@ -23,6 +25,23 @@
 {
     border-top:1px solid #ccc;
     padding:15px;
+    font-size:2em;
+}
+.word-item:after
+{
+    display:block;
+    clear:both;
+}
+.word-item-delete
+{
+    float:right;
+    cursor:pointer;
+    font-weight:bold;
+    color:#aaa;
+}
+.word-item-delete:hover
+{
+    color:#F44336;
 }
 </style>
 <script>
@@ -32,13 +51,17 @@ $(document).ready(function() {
         if (!$("#new-word").val()) {
             return;
         }
-        $("#word-list").append($("<div class='word-item'>" + $("<div />").text($("#new-word").val()).html() + "</div>"));
+        $("#word-list").append($("<div class='word-item'>" + $("<div />").text($("#new-word").val()).html() + "<span class='word-item-delete'>&times;</span></div>"));
         $("#new-word").val("");
     });
     $("#new-word").keyup(function(e) {
         if (e.keyCode == 13) {
             $("#add-word").click();
         }
+    });
+    $("#word-list").on("click", ".word-item-delete", function(e) {
+        e.preventDefault();
+        $(this).parent().remove();
     });
 });
 </script>
