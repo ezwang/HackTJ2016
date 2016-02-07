@@ -45,9 +45,28 @@ def updateCurrentList():
     return 'New'
 
 
+@app.route('/remWordList')
+def removeWord():
+    char = request.args.get('char')
+    try:
+        del(currentWords[char])
+        return True
+    except ValueError:
+        return False
+
+
 @app.route('/getWordList')
 def getWordList():
-    return jsonify(**{'data': currentWords})
+    return jsonify(**{'data': currentWords.keys()})
+
+
+@app.route('/getMeaning')
+def getMeaning():
+    char = request.args.get('char')
+    try:
+        return jsonify(**{'data': currentWords[char]})
+    except KeyError:
+        return ''
 
 
 @app.route('/saveSet')
