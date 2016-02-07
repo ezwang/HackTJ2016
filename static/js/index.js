@@ -61,9 +61,9 @@ $(document).ready(function() {
     $("#set-label").keyup(function(e) {
         $("#load-set, #save-set, #delete-set").prop("disabled", $("#set-label").val().length == 0);
     });
-    var all_sets = $.get('/getListOfSets', function(data) {
+    $.get('/getListOfSets', function(data) {
       console.log(data.data);
-      $('#set-label').autocomplete({source: data.data});
+      $('#set-label').autocomplete({source: data.data, delay: 0});
     });
     //console.log(all_sets);
 });
