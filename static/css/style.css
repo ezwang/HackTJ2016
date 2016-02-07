@@ -11,9 +11,9 @@
 #about-icon-div {
   position:absolute;
 	right:1vh;
-	top: 1.3vh;
-	height: 7vh;
-	width: 7vh;
+	top: 0.8vw;
+	height: 3vw;
+	width: 3vw;
 	border-radius: 50%;
 	transition: background-color .2s, box-shadow .2s;
 }
@@ -23,8 +23,8 @@
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
 }
 #about-icon {
-  height: 7vh;
-	width: 7vh;
+  height: 3vw;
+	width: 3vw;
 }
 #about-div {
   z-index: 11;
