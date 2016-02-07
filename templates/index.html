@@ -57,8 +57,9 @@ $(document).ready(function() {
         if (!$("#new-word").val()) {
             return;
         }
-        $("#word-list").append($("<div class='word-item'>" + $("<div />").text($("#new-word").val()).html() + "<span class='word-item-delete'>&times;</span></div>"));
+        $("#word-list").append($("<div class='word-item'><span class='word-item-text'>" + $("<div />").text($("#new-word").val()).html() + "</span><span class='word-item-delete'>&times;</span></div>"));
         $("#new-word").val("");
+        load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text());
     });
     $("#new-word").keyup(function(e) {
         if (e.keyCode == 13) {
@@ -70,10 +71,13 @@ $(document).ready(function() {
         $(this).parent().remove();
     });
 });
+function load_practice_word(word) {
+    $("#practice-word").text(word);
+}
 </script>
 <div class="card">
     <h3>Word Practice</h3>
-    <div id="practice-word">你好</div>
+    <div id="practice-word"></div>
 </div>
 <div class="card">
     <h3>Word List</h3>
