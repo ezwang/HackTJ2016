@@ -16,10 +16,12 @@ $(document).ready(function() {
     });
     $("#word-list").on("click", ".word-item-delete", function(e) {
         e.preventDefault();
+        var word = $(this).parent().find('.word-item-text').text();
         $(this).parent().remove();
         if ($("#word-list .word-item").length == 0) {
             $("#btn-toggle").prop("disabled", true);
         }
+        $.get("/removeWord", "word=" + encodeURIComponent(word));
     });
     $("#btn-toggle").click(function(e) {
         e.preventDefault();
@@ -30,6 +32,12 @@ $(document).ready(function() {
         $("#btn-toggle").text(playing ? 'Stop Practice' : 'Start Practice');
         if (playing) {
             load_random_practice_word();
+        }
+        else {
+            try {
+                recognition.stop();
+            }
+            catch (e) { }
         }
     });
     $("#load-set").click(function(e) {
@@ -140,6 +148,7 @@ function check_answer(usrans) {
 }
 function add_word(word, trans) {
     $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + word + "</span><span class='word-item-trans'>" + trans + "</span><span class='word-item-delete'>&times;</span></div>"));
+    $.get("/addWord", "word=" + encodeURIComponent(word));
 }
 function load_practice_word(word, trans) {
     $("#practice-word").data('word', word);
