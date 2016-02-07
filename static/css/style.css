@@ -8,23 +8,19 @@
 {
     padding:15px;
 }
+.navbar-header {
+    width:100%;
+}
 #about-icon-div {
-  position:absolute;
-	right:1vh;
-	top: 0.8vw;
-	height: 3vw;
-	width: 3vw;
-	border-radius: 50%;
-	transition: background-color .2s, box-shadow .2s;
+    display:inline-block;
+    padding:10px;
+    float:right;
+    transition:background-color .2s, box-shadow .2s;
 }
 #about-icon-div:hover {
-	cursor: pointer;
-	background-color: rgba(255, 255, 255, .5);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-}
-#about-icon {
-  height: 3vw;
-	width: 3vw;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, .5);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
 }
 #about-div {
   z-index: 11;
@@ -47,7 +43,7 @@
 }
 #about-div-bg {
   z-index: 10;
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
