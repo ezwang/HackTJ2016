@@ -32,7 +32,7 @@ def getPinYin():
     return 'True'
 
 
-@app.route('/saveList')
+@app.route('/saveSet')
 def saveWordList():
     name = request.args.get('label')
     l = request.args.get('words')
@@ -42,7 +42,7 @@ def saveWordList():
     return True
 
 
-@app.route('/getList')
+@app.route('/loadSet')
 def getWordList():
     name = request.args.get('label')
     try:

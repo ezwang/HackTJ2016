@@ -78,3 +78,16 @@ function load_practice_word(word) {
     $("#practice-word").text(word);
     quiz_word();
 }
+
+function load_set() {
+  $.get('/loadSet', 'label=' + $('#load-set').val(), function(data) {
+    $('#word-list').children().remove();
+    $.each(data, function(k, v) {
+      $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + v + "</span><span class='word-item-delete'>&times;</span></div>"));
+    });
+  });
+}
+
+function save_set() {
+  // $.post('/saveSet', 'label=' + $('save-set').text() + '&words=' + )
+}
