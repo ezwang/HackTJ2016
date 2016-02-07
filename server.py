@@ -13,6 +13,7 @@ with open('savedWords.json') as savedWordsJSON:
     savedWords = json.load(savedWordsJSON)
 
 fileLock = th.Lock()
+TTSLock = th.Lock()
 
 currentWords = {}
 
@@ -34,6 +35,36 @@ def getPinYin():
         if spoken_unicode not in pinyin or actual_unicode not in pinyin or not (set(pinyin[spoken_unicode]) & set(pinyin[actual_unicode])):
             return 'False'
     return 'True'
+
+
+@app.route('/addWord')
+def addWord():
+    word = request.args.get('word')
+    th.Thread(target=getTTSAsync, args=(word,)).run()
+    return 'True'
+
+
+@app.route('/delWord')
+def delWord():
+    word = request.args.get('word')
+    th.Thread(target=delTTSAsync, args=(word,)).run()
+    return 'True'
+
+
+def delTTSAsync(word):
+    TTSLock.acquire()
+    try:
+        del(currentWords[word])
+    except ValueError:
+        pass
+    TTSLock.release()
+
+
+def getTTSAsync(word):
+    out = requests.get('https://api.voicerss.org/', params={'key': '970f71e61a4b4c8abd6af0d1f6a5326e', 'src': word, 'hl': 'zh-cn', 'r': -5})
+    TTSLock.acquire()
+    currentWords[word] = out
+    TTSLock.release()
 
 
 @app.route('/saveSet')
@@ -94,8 +125,14 @@ def loadPinyinList():
 @app.route('/getTTS')
 def getTTS():
     phrase = request.args.get('chars')
-    audio = requests.get('https://api.voicerss.org/', params={'key': '970f71e61a4b4c8abd6af0d1f6a5326e', 'src': phrase, 'hl': 'zh-cn', 'r': -5})
-    return Response(audio.content, mimetype='audio/mpeg')
+    try:
+        TTSLock.acquire()
+        out = Response(currentWords[phrase], mimetype='audio/mpeg')
+        TTSLock.release()
+        return out
+    except KeyError:
+        audio = requests.get('https://api.voicerss.org/', params={'key': '970f71e61a4b4c8abd6af0d1f6a5326e', 'src': phrase, 'hl': 'zh-cn', 'r': -5})
+        return Response(audio.content, mimetype='audio/mpeg')
 
 
 def saveWords():
