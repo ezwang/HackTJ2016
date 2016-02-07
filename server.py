@@ -53,7 +53,7 @@ def getWordList():
 
 @app.route('/getListOfSets')
 def getListList():
-    return jsonify(**{'data': list(savedWords.keys)})
+    return jsonify(**{'data': list(savedWords.keys())})
 
 
 @app.route('/deleteSet')
