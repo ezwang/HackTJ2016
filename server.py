@@ -15,9 +15,15 @@ def index():
 
 @app.route('/uni2pinyin')
 def getPinYin():
-    s = ord(request.args.get('spoken'))
-    a = ord(request.args.get('actual'))
-    return len(set(pinyin[s]) & set(pinyin[a])) > 0
+    spoken = request.args.get('spoken')
+    actual = request.args.get('actual')
+    if len(actual) != len(spoken): return False
+    for c in range(len(spoken)):
+        spoken_unicode = ord(spoken[c])
+        actual_unicode = ord(actual[c])
+        if spoken_unicode not in pinyin or actual_unicode not in pinyin or not (pinyin[spoken_unicode] and pinyin[actual_unicode]):
+            return False
+    return True
 
 
 if __name__ == '__main__':
