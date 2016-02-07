@@ -33,6 +33,12 @@ $(document).ready(function() {
         if (playing) {
             load_random_practice_word();
         }
+        else {
+            try {
+                recognition.stop();
+            }
+            catch (e) { }
+        }
     });
     $("#load-set").click(function(e) {
         e.preventDefault();
