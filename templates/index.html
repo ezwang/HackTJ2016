@@ -96,21 +96,6 @@
   height: 2vw;
 	width: 2vw;
 }
-.btn.btn-raised.btn-success{
-    background-color: #8C9EFF;
-    background-color: #536DFE;
-}
-.btn.btn-raised.btn-primary{
-    background-color: #536DFE;
-}
-.btn:not(.btn-raised).btn_success,
-input-group-btn.btn:not(.btn-raised).btn-success{
-    background-color: #8C9EFF;
-}
-.btn:not(.btn-raised).btn_primary,
-input-group-btn.btn:not(.btn-raised).btn-primary{
-    background-color: #8C9EFF;
-}
 
 </style>
 <div id="card-practice" class="card" style="margin-bottom:2vh;">
@@ -121,7 +106,7 @@ input-group-btn.btn:not(.btn-raised).btn-primary{
       </label>
     </div>
     <div id="practice-word"></div>
-    <button id="btn-toggle" class="btn btn-raised btn-primary" disabled>Start Practice</button>
+    <button id="btn-toggle" class="btn btn-raised btn-info" disabled>Start Practice</button>
     <div id='speaker-div'>
       <img src='speaker.png' id='speaker'>
     </div>
@@ -144,12 +129,12 @@ input-group-btn.btn:not(.btn-raised).btn-primary{
       </tr>
     </table>
     <div>
-      <button id="add-word" class="btn btn-raised btn-success">Add Word</button>
+      <button id="add-word" class="btn btn-raised btn-info">Add Word</button>
       <input type="file" id="upload-file" style="display:inline-block;margin-left:10px" value="Upload File" />
       <input type='text' id='set-label' class="form-control" style='width:20vw;box-shadow:none;margin-left:4vw;display:inline' placeholder="Label Name">
-      <button id='save-set' class="btn btn-raised btn-success" disabled>Save</button>
-      <button id='load-set' class="btn btn-raised btn-success" disabled>Load</button>
-      <button id='delete-set' class="btn btn-raised btn-success" disabled>Delete</button>
+      <button id='save-set' class="btn btn-raised btn-info" disabled>Save</button>
+      <button id='load-set' class="btn btn-raised btn-info" disabled>Load</button>
+      <button id='delete-set' class="btn btn-raised btn-info" disabled>Delete</button>
     </div>
 </div>
 {% endblock %}
