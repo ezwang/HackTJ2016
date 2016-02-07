@@ -44,6 +44,7 @@ def updateCurrentList():
     currentWords[char] = trans
     return 'New'
 
+
 @app.route('/remWordList')
 def removeWord():
     char = request.args.get('char')
