@@ -13,6 +13,8 @@ with open('savedWords.json') as savedWordsJSON:
 
 fileLock = th.Lock()
 
+currentWords = {}
+
 
 @app.route('/')
 def index():
@@ -30,6 +32,22 @@ def getPinYin():
         if spoken_unicode not in pinyin or actual_unicode not in pinyin or not (set(pinyin[spoken_unicode]) & set(pinyin[actual_unicode])):
             return 'False'
     return 'True'
+
+
+@app.route('/updateWordList')
+def updateCurrentList():
+    char = request.args.get('char')
+    trans = request.args.get('meaning')
+    if char in currentWords:
+        currentWords[char] = trans
+        return 'Updated'
+    currentWords[char] = trans
+    return 'New'
+
+
+@app.route('/getWordList')
+def getWordList():
+    return jsonify(**{'data': currentWords})
 
 
 @app.route('/saveSet')
