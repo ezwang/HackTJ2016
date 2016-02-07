@@ -61,7 +61,7 @@ def saveWordList():
 
 
 @app.route('/loadSet')
-def getWordList():
+def getWordSet():
     name = request.args.get('label')
     try:
         return jsonify(**{'data': savedWords[name]})

@@ -84,7 +84,6 @@ function quiz_word() {
         }
     }
     recognition.onend = function(event) {
-        console.log(final_transcript);
         check_answer(final_transcript);
     }
     recognition.start();
