@@ -39,7 +39,7 @@ $(document).ready(function() {
     });
     $("#load-set").click(function(e) {
         e.preventDefault();
-        $.getJSON('/loadSet', 'label=' + $('#set-label').val(), function(data) {
+        $.getJSON('/loadSet', 'label=' + encodeURIComponent($('#set-label').val()), function(data) {
             $('#word-list').children().remove();
             $.each(data.data, function(k, v) {
                 $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + v + "</span><span class='word-item-delete'>&times;</span></div>"));
@@ -52,7 +52,14 @@ $(document).ready(function() {
         $.each($("#word-list").children(), function(k, v) {
             words.push($(this).find('.word-item-text').text());
         });
-        $.get('/saveSet', 'label=' + $('#set-label').val() + '&words=' + encodeURIComponent(JSON.stringify(words)));
+        $.get('/saveSet', 'label=' + encodeURIComponent($('#set-label').val()) + '&words=' + encodeURIComponent(JSON.stringify(words)));
+    });
+    $("#delete-set").click(function(e) {
+        e.preventDefault();
+        $.get('/deleteSet', 'label=' + encodeURIComponent($('#set-label').val()));
+    });
+    $("#set-label").keyup(function(e) {
+        $("#load-set, #save-set, #delete-set").prop("disabled", $("#set-label").val().length == 0);
     });
     var all_sets = $.get('/getListOfLists');
     $('#set-label').autocomplete({source: all_sets});
