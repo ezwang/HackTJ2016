@@ -60,6 +60,12 @@ $(document).ready(function() {
     $('#upload-button').click(function(e) {
       $('#upload').slideDown('fast');
     });
+    $('#about-icon').click(function() {
+      $('.about').slideDown('fast');
+    });
+    $('#about-div-bg, .x-button').click(function() {
+      $('.about').css('display', 'none');
+    });
 });
 function load_random_practice_word() {
     load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text());

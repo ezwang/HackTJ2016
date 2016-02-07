@@ -2,7 +2,7 @@
 <html>
     <head>
         {% block head %}
-        <title>Word Polo</title>
+        <title>WordPolo</title>
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -22,9 +22,17 @@
     <div class="navbar navbar-inverse header-panel">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/" style="font-size:3vw;">Word Polo</a>
+                <a class="navbar-brand" href="/" style="font-size:3vw;">WordPolo</a>
+                <div id='about-icon-div'>
+                  <img id='about-icon' src='about.png'>
+                </div>
             </div>
         </div>
+    </div>
+    <div id='about-div-bg' class='about'>
+    </div>
+    <div id='about-div' class='about'>
+      <span class='x-button'>&#10006</span>
     </div>
     <div id="content">
         {% block content %}
