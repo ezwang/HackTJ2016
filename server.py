@@ -54,6 +54,15 @@ def getWordList():
 def getListList():
     return json.dumps(savedWords.keys)
 
+@app.route('/deleteSet')
+def deleteWordList():
+    name = request.args.get('label')
+    if name in savedWords:
+        del savedWords[name]
+    t = th.Thread(target=saveWords)
+    t.run()
+    return 'True'
+
 
 def saveWords():
     fileLock.acquire()
