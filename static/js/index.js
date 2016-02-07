@@ -41,6 +41,9 @@ $(document).ready(function() {
         e.preventDefault();
         $.getJSON('/loadSet', 'label=' + encodeURIComponent($('#set-label').val()), function(data) {
             $('#word-list').children().remove();
+            if (data.data.length > 0) {
+                $("#btn-toggle").prop("disabled", false);
+            }
             $.each(data.data, function(k, v) {
                 $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + v + "</span><span class='word-item-delete'>&times;</span></div>"));
             });
