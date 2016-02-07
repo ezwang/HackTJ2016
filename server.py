@@ -48,7 +48,7 @@ def getWordList():
     try:
         return jsonify(**{'data':savedWords[name]})
     except KeyError:
-        return ""
+        return jsonify(**{'data':[]})
 
 @app.route('/getListOfLists')
 def getListList():
