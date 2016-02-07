@@ -82,8 +82,7 @@ $(document).ready(function() {
     $('#speaker').click(function() {
         var chars = document.getElementById('practice-word').innerHTML;
         if (!chars) return;
-        var file = $.get('/getTTS', 'chars=' + chars);
-        var audio = new Audio(file);
+        var audio = new Audio('/getTTS?chars=' + encodeURIComponent(chars));
         audio.play();
     });
     $("#upload-file").change(function(e) {
