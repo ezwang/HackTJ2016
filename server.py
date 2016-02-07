@@ -95,7 +95,6 @@ def loadPinyinList():
 def getTTS():
     phrase = request.args.get('chars')
     audio = requests.get('https://api.voicerss.org/', params={'key': '970f71e61a4b4c8abd6af0d1f6a5326e', 'src': phrase, 'hl': 'zh-cn'})
-    print(audio.headers)
     return Response(audio.content, mimetype='audio/mpeg')
 
 
