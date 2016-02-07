@@ -33,8 +33,8 @@
   right: 0;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 3vh;
-  padding-bottom: 3vh;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
   padding-left: 10vw;
   padding-right: 10vw;
   top: 12vh;
@@ -43,6 +43,7 @@
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   overflow: auto;
+  font-size: 13pt;
 }
 #about-div-bg {
   z-index: 10;
