@@ -14,9 +14,6 @@ with open('savedWords.json') as savedWordsJSON:
 
 fileLock = th.Lock()
 
-currentWords = {}
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -85,7 +82,7 @@ def loadWordList():
     name = request.args.get('label')
     try:
         currentWords = deepcopy(savedWords[name])
-        return 'True'
+        return jsonify(**{'data':currentWords})
     except KeyError:
         return 'False'
 

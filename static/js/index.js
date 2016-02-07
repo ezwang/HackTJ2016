@@ -11,14 +11,14 @@ $(document).ready(function() {
 
     $("#add-word").click(function(e) {
         e.preventDefault();
-        if (!$("#new-word").val()) {
+        if (!$("#new-word-char").val()) {
             return;
         }
         $("#btn-toggle").prop("disabled", false);
-        $("#word-list").append($("<div class='word-item'><span class='word-item-text'>" + $("<div />").text($("#new-word").val()).html() + "</span><span class='word-item-delete'>&times;</span></div>"));
-        $("#new-word").val("");
+        $("#word-list").append($("<div class='word-item'><span class='word-item-text'>" + $("<div />").text($("#new-word-char").val()).html() + "</span><span class='word-item-trans'>" + $("<div />").text($("#new-word-trans").val()).html() + "</span><span class='word-item-delete'>&times;</span></div>"));
+        $("#new-word-char, #new-word-trans").val("");
     });
-    $("#new-word").keyup(function(e) {
+    $("#new-word-char, #new-word-trans").keyup(function(e) {
         if (e.keyCode == 13) {
             $("#add-word").click();
         }
