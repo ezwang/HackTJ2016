@@ -1,3 +1,4 @@
+var playing = false;
 $(document).ready(function() {
     $("#add-word").click(function(e) {
         e.preventDefault();
@@ -25,7 +26,11 @@ $(document).ready(function() {
         if ($("#word-list .word-item").length == 0) {
             return;
         }
-        load_random_practice_word();
+        playing = !playing;
+        $("#btn-toggle").text(playing ? 'Stop Practice' : 'Start Practice');
+        if (playing) {
+            load_random_practice_word();
+        }
     });
     $("#load-set").click(function(e) {
         e.preventDefault();
@@ -67,24 +72,11 @@ $(document).ready(function() {
       $('.about').css('display', 'none');
     });
     $('#speaker').click(function() {
-      var chars = document.getElementById('practice-word').innerHTML;
-      if (!chars) return;
-      var file = $.get('/getTTS', 'chars=' + chars);
-      var audio = new Audio(file);
-      audio.play();
-      // var msg = new SpeechSynthesisUtterance();
-      // msg.txt = '\\u549b';
-      // console.log(msg.txt);
-      // // msg.text = document.getElementById('practice-word').innerHTML;
-      // // var unicoded = ''
-      // // $.each(msg.txt, function(k, v) {
-      // //   unicoded += ord
-      // // });
-      // msg.lang = 'zh-CN';
-      // msg.rate = 0.3;
-      // msg.voice = window.speechSynthesis.getVoices()[10];
-      // msg.pitch = 1;
-      // window.speechSynthesis.speak(msg);
+        var chars = document.getElementById('practice-word').innerHTML;
+        if (!chars) return;
+        var file = $.get('/getTTS', 'chars=' + chars);
+        var audio = new Audio(file);
+        audio.play();
     });
     $("#upload-file").change(function(e) {
         if ($(this)[0].files.length > 0) {
@@ -99,12 +91,19 @@ $(document).ready(function() {
                         add_word(stuff[0], stuff[stuff.length-1]);
                     }
                 });
+                if (data) {
+                    $("#btn-toggle").prop("disabled", false);
+                }
             };
             $(this).val('');
         }
     });
 });
 function load_random_practice_word() {
+    if (!playing) {
+        $("#practice-word").text('');
+        return;
+    }
     load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text(), $("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-trans").text());
 }
 var recognition = new webkitSpeechRecognition();
