@@ -17,6 +17,10 @@ TTSLock = th.Lock()
 
 currentWords = {}
 
+from pymongo import MongoClient
+
+client = MongoClient("mongodb://derp:merp@ds059135.mongolab.com:59135/hacktj")
+db = client['hacktj']
 
 @app.route('/')
 def index():
@@ -71,9 +75,7 @@ def getTTSAsync(word):
 def saveWordList():
     name = request.args.get('label')
     words = request.args.get('words')
-    savedWords[name] = json.loads(words)
-    t = th.Thread(target=saveWords)
-    t.run()
+    db.lists.insert({'label':name, 'words':words})
     return 'True'
 
 
@@ -81,25 +83,24 @@ def saveWordList():
 def loadWordList():
     name = request.args.get('label')
     try:
-        return jsonify(**{'data': savedWords[name]})
-    except KeyError:
-        return ''
-
+        data = db.lists.find({'label':name})
+        return jsonify(**{'data': json.loads(data[0]['words'])})
+    except IndexError:
+        return jsonify(**{'data': []})
 
 @app.route('/getListOfSets')
 def getListList():
-    return jsonify(**{'data': list(savedWords.keys())})
+    return jsonify(**{'data': [x['label'] for x in db.lists.find()]})
 
 
 @app.route('/deleteSet')
 def deleteWordList():
     name = request.args.get('label')
-    if name in savedWords:
-        del savedWords[name]
-        t = th.Thread(target=saveWords)
-        t.run()
-        return 'True'
-    return 'False'
+    try:
+        db.lists.delete_many({'label':name})
+    except TypeError:
+        return 'False'
+    return 'True'
 
 
 @app.route('/loadMeaningFromFile')
@@ -143,4 +144,4 @@ def saveWords():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, threaded=True)
+    app.run(host='0.0.0.0', port=5000, threaded=True, debug=True)
