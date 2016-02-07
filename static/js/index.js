@@ -5,7 +5,7 @@ $(document).ready(function() {
             return;
         }
         $("#btn-toggle").prop("disabled", false);
-        $("#word-list").append($("<div class='word-item'><span class='word-item-text'>" + $("<div />").text($("#new-word-char").val()).html() + "</span><span class='word-item-trans'>" + $("<div />").text($("#new-word-trans").val()).html() + "</span><span class='word-item-delete'>&times;</span></div>"));
+        add_word($("<div />").text($("#new-word-char").val()).html(), $("<div />").text($("#new-word-trans").val()).html());
         $("#new-word-char, #new-word-trans").val("");
     });
     $("#new-word-char, #new-word-trans").keyup(function(e) {
@@ -35,7 +35,7 @@ $(document).ready(function() {
                 $("#btn-toggle").prop("disabled", false);
             }
             $.each(data.data, function(k, v) {
-                $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + v[0] + "</span><span class='word-item-trans'>" + v[1] + "</span><span class='word-item-delete'>&times;</span></div>"));
+                add_word(v[0], v[1]);
             });
         });
     });
@@ -86,6 +86,23 @@ $(document).ready(function() {
       // msg.pitch = 1;
       // window.speechSynthesis.speak(msg);
     });
+    $("#upload-file").change(function(e) {
+        if ($(this)[0].files.length > 0) {
+            var selectedFile = $(this)[0].files[0];
+            var read = new FileReader();
+            read.readAsText(selectedFile, 'UTF-8');
+            read.onloadend = function() {
+                var data = read.result;
+                $.each(data.split('\n'), function(k, v) {
+                    if (v) {
+                        var stuff = v.split('\t');
+                        add_word(stuff[0], stuff[stuff.length-1]);
+                    }
+                });
+            };
+            $(this).val('');
+        }
+    });
 });
 function load_random_practice_word() {
     load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text(), $("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-trans").text());
@@ -121,6 +138,9 @@ function check_answer(usrans) {
         $("#card-practice").css("background-color", "");
         load_random_practice_word();
     }, 3000);
+}
+function add_word(word, trans) {
+    $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + word + "</span><span class='word-item-trans'>" + trans + "</span><span class='word-item-delete'>&times;</span></div>"));
 }
 function load_practice_word(word, trans) {
     $("#practice-word").data('word', word);
