@@ -28,25 +28,23 @@ $(document).ready(function() {
         $(this).parent().remove();
         if ($("#word-list .word-item").length == 0) {
             $("#btn-toggle").prop("disabled", true);
-            playing = false;
         }
     });
-    var playing = false;
     $("#btn-toggle").click(function(e) {
         e.preventDefault();
         if ($("#word-list .word-item").length == 0) {
             return;
         }
-        playing = !playing;
-        $("#btn-toggle").text(!playing ? 'Start Practice' : 'Stop Practice');
-        load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text());
+        load_random_practice_word();
     });
 });
+function load_random_practice_word() {
+    load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text());
+}
+var recognition = new webkitSpeechRecognition();
 function quiz_word() {
     var final_transcript = '';
-    var recognition = new webkitSpeechRecognition();
-   recognition.lang = 'zh-CN';
-      // recognition.lang = 'cmn';
+    recognition.lang = 'zh-CN';
     recognition.onresult = function(event) {
         for (var i = event.resultIndex; i < event.results.length; ++i) {
             if (event.results[i].isFinal) {
@@ -55,17 +53,26 @@ function quiz_word() {
                 }
             }
         }
-        if (final_transcript) {
-            console.log(final_transcript);
-        }
+    }
+    recognition.onend = function(event) {
+        console.log(final_transcript);
+        check_answer(final_transcript);
     }
     recognition.start();
 }
-
-function process_input(inpt) {
-
+function check_answer(usrans) {
+    if (usrans == $("#practice-word").text()) {
+        $("#practice-word").css("background-color", "green");
+    }
+    else {
+        $("#practice-word").css("background-color", "red");
+    }
+    setTimeout(function() {
+        $("#practice-word").css("background-color", "");
+        load_random_practice_word();
+    }, 3000);
 }
-
 function load_practice_word(word) {
     $("#practice-word").text(word);
+    quiz_word();
 }
