@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+from copy import deepcopy
 
 from flask import *
 import json
@@ -72,20 +73,21 @@ def getMeaning():
 @app.route('/saveSet')
 def saveWordList():
     name = request.args.get('label')
-    l = request.args.get('words')
-    savedWords[name] = json.loads(l)
+    savedWords[name] = jsonify(**{'data': currentWords})
     t = th.Thread(target=saveWords)
     t.run()
     return 'True'
 
 
 @app.route('/loadSet')
-def getWordSet():
+def loadWordList():
+    global currentWords
     name = request.args.get('label')
     try:
-        return jsonify(**{'data': savedWords[name]})
+        currentWords = deepcopy(savedWords[name])
+        return 'True'
     except KeyError:
-        return jsonify(**{'data': []})
+        return 'False'
 
 
 @app.route('/getListOfSets')
