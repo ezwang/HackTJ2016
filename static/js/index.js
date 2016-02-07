@@ -1,14 +1,4 @@
 $(document).ready(function() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-    window.URL = window.URL || window.webkitURL;
-
-    var audio_context = new AudioContext;
-
-    if (!('webkitSpeechRecognition' in window)) {
-        upgrade();
-    }
-
     $("#add-word").click(function(e) {
         e.preventDefault();
         if (!$("#new-word-char").val()) {
@@ -45,7 +35,7 @@ $(document).ready(function() {
                 $("#btn-toggle").prop("disabled", false);
             }
             $.each(data.data, function(k, v) {
-                $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + v + "</span><span class='word-item-delete'>&times;</span></div>"));
+                $('#word-list').append($("<div class='word-item'><span class='word-item-text'>" + v[0] + "</span><span class='word-item-trans'>" + v[1] + "</span><span class='word-item-delete'>&times;</span></div>"));
             });
         });
     });
@@ -53,7 +43,7 @@ $(document).ready(function() {
         e.preventDefault();
         var words = [];
         $.each($("#word-list").children(), function(k, v) {
-            words.push($(this).find('.word-item-text').text());
+            words.push([$(this).find('.word-item-text').text(), $(this).find('.word-item-trans').text()]);
         });
         $.get('/saveSet', 'label=' + encodeURIComponent($('#set-label').val()) + '&words=' + encodeURIComponent(JSON.stringify(words)));
     });
