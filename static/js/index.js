@@ -68,7 +68,7 @@ $(document).ready(function() {
     });
 });
 function load_random_practice_word() {
-    load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text());
+    load_practice_word($("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-text").text(), $("#word-list .word-item").eq(Math.floor(Math.random() * $("#word-list .word-item").length)).find(".word-item-trans").text());
 }
 var recognition = new webkitSpeechRecognition();
 function quiz_word() {
@@ -89,22 +89,26 @@ function quiz_word() {
     recognition.start();
 }
 function check_answer(usrans) {
-    $.get('/uni2pinyin', 'spoken=' + usrans + '&actual=' + $("#practice-word").text(), function(data) {
+    $.get('/uni2pinyin', 'spoken=' + usrans + '&actual=' + $("#practice-word").data('word'), function(data) {
         if (data.toLowerCase() == "true") {
             $("#card-practice").css("background-color", "#4CAF50");
         }
         else {
             $("#card-practice").css("background-color", "#F44336");
-            $("#card-hint").text(/* TODO: insert pinyin */'').show();
         }
     });
     setTimeout(function() {
         $("#card-practice").css("background-color", "");
-        $("#card-hint").hide();
         load_random_practice_word();
     }, 3000);
 }
-function load_practice_word(word) {
-    $("#practice-word").text(word);
+function load_practice_word(word, trans) {
+    $("#practice-word").data('word', word);
+    if ($("#quiz-type").is(":checked")) {
+        $("#practice-word").text(trans);
+    }
+    else {
+        $("#practice-word").text(word);
+    }
     quiz_word();
 }
